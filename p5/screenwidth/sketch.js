@@ -2,8 +2,8 @@ let w = 0
 let h = 0
 
 function setup() {
-  w = windowWidth
-  h = windowHeight
+  w = displayWidth
+  h = displayHeight
   createCanvas(w,h);
   strokeWeight(1);
   stroke(0);
