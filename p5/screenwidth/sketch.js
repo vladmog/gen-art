@@ -16,7 +16,7 @@ function setup() {
 
 function draw() {
  
-  background(200);
+  background(255);
   line(0,0,w,h)
   ellipse(w/2, h/2, 60)
 
