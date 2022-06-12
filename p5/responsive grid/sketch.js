@@ -122,16 +122,17 @@ function setup() {
     
   }
 
-  let rows = 100;
-  let cols = 100;
-  let margin = 25;
-  let reducer = .4;
+  let rows = 200;
+  let cols = 200;
+  let margin = 0;
+  let reducer = .5;
   let blockMaxWidth = ((width - margin*2)/rows)*0.8;
   let blockMinWidth = blockMaxWidth * reducer;
   for (let row = 0; row <= rows; row++) {
     for (let col = 0; col <= cols; col++) {
       let x = map(col, 0, cols, 0 + margin, width-margin);
       let y = map(row, 0, rows, 0+margin, height-margin);
+      
       
       drawBlock({x,y}, blockMinWidth, blockMaxWidth, img1, img2)
       
