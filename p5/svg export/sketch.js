@@ -1,17 +1,10 @@
-/* export SVG
-DDF 2019
-need to have p5.svg.js in project and in index.html
-see -https://github.com/zenozeng/p5.js-svg
-this will save an SVG file in your download folder
-*/
 
 function setup() {
-  createCanvas(500, 500, SVG); // Create SVG Canvas
-  strokeWeight(1); // do 0.1 for laser
-  stroke(0); // red is good for laser
-  noFill(); // better not to have a fill for laser
+  createCanvas(500, 500, SVG); 
+  strokeWeight(1); 
+  stroke(0); 
+  noFill(); 
   angleMode(DEGREES);
-  // background(255);
 }
 
 let iterator = 0;
