@@ -1,27 +1,21 @@
-let w = 0
-let h = 0
+let w = 0;
+let h = 0;
 
 function setup() {
-  w = displayWidth
-  h = displayHeight
-  createCanvas(w,h);
-  strokeWeight(1);
-  stroke(0);
-  noFill();
-  angleMode(DEGREES);
-  frameRate(30);
+	w = displayWidth;
+	h = displayHeight;
+	createCanvas(w, h);
+	strokeWeight(1);
+	stroke(0);
+	noFill();
+	angleMode(DEGREES);
+	frameRate(30);
 }
-
-
 
 function draw() {
- 
-  background(255);
-  line(0,0,w,h)
-  ellipse(w/2, h/2, 60)
+	background(255);
+	line(0, 0, w, h);
+	ellipse(w / 2, h / 2, 60);
 
-  noLoop(); 
+	noLoop();
 }
-
-
-
