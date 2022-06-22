@@ -3,43 +3,45 @@ On 3K screen, 1 inch = 130.3 px
 aka 3 inches = 391 px
 */
 
-let inchDimensions = {
+const dim = {};
+
+dim.inchDimensions = {
 	x: 1,
 	y: 1,
 };
 
-let pxDimensions = {
+dim.pxDimensions = {
 	x: 130.3,
 	y: 130.3,
 };
 
-const inchToPx = inches => {
-	const px = (pxDimensions.x * inches) / inchDimensions.x;
+dim.inchToPx = inches => {
+	const px = (dim.pxDimensions.x * inches) / dim.inchDimensions.x;
 	return px;
 };
 
-const mmToPx = mm => {
-	const px = (pxDimensions.x * mm) / (inchDimensions.x * 25.4);
+dim.mmToPx = mm => {
+	const px = (dim.pxDimensions.x * mm) / (dim.inchDimensions.x * 25.4);
 	return px;
 };
 
-const pxToInch = px => {
-	const inches = (inchDimensions.x * px) / pxDimensions.x;
+dim.pxToInch = px => {
+	const inches = (dim.inchDimensions.x * px) / dim.pxDimensions.x;
 	return inches;
 };
 
-const pxToMM = px => {
-	const inches = (inchDimensions.x * px) / pxDimensions.x;
+dim.pxToMM = px => {
+	const inches = (dim.inchDimensions.x * px) / dim.pxDimensions.x;
 	const mm = inches * 24.4;
 	return mm;
 };
 
-const mmToInch = mm => {
+dim.mmToInch = mm => {
 	const inches = mm / 25.4;
 	return inches;
 };
 
-const inchToMM = inches => {
+dim.inchToMM = inches => {
 	const mm = inches * 25.4;
 	return mm;
 };

@@ -7,29 +7,29 @@ const hInches = 4;
 const defaultPen = "Pilot G2 0.7";
 
 // Derive canvas size equivalent to plot size
-inchDimensions = {
-	x: (inchDimensions.x *= wInches),
-	y: (inchDimensions.y *= hInches),
+dim.inchDimensions = {
+	x: (dim.inchDimensions.x *= wInches),
+	y: (dim.inchDimensions.y *= hInches),
 };
-pxDimensions = {
-	x: (pxDimensions.x *= wInches),
-	y: (pxDimensions.y *= hInches),
+dim.pxDimensions = {
+	x: (dim.pxDimensions.x *= wInches),
+	y: (dim.pxDimensions.y *= hInches),
 };
 
 // Scale canvas (optional. useful if plot is bigger than screen)
 const scaleFactor = 1; // 1 = no scaling applied.
-pxDimensions = {
-	x: (pxDimensions.x *= scaleFactor),
-	y: (pxDimensions.y *= scaleFactor),
+dim.pxDimensions = {
+	x: (dim.pxDimensions.x *= scaleFactor),
+	y: (dim.pxDimensions.y *= scaleFactor),
 };
 
 // Derive stroke weight
-const defStrokeWeight = inchToPx(lineWidth(defaultPen));
+const defStrokeWeight = dim.inchToPx(lineWidth(defaultPen));
 
 // ======== E N D   S E T U P ============
 
 function setup() {
-	createCanvas(pxDimensions.x, pxDimensions.y, SVG);
+	createCanvas(dim.pxDimensions.x, dim.pxDimensions.y, SVG);
 	strokeWeight(defStrokeWeight);
 	stroke(0);
 	noFill();
