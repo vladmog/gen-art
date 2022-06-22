@@ -12,8 +12,8 @@ The tool will be able to handle input as simple as the utensil type only, and as
 
 #### Input
 
-utensil - Str - name of writing utensil
-paper - Str - name of paper
+utensil - Str - name of writing utensil  
+paper - Str - name of paper  
 speed - Num - Axidraw drawing speed [1,100]
 
 #### Output
