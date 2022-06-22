@@ -49,7 +49,7 @@ const pxDimensions = {
 
 
 function setup() {
-  createCanvas(pxDimensions.x, pxDimensions.y);
+  createCanvas(pxDimensions.x, pxDimensions.y, SVG);
   strokeWeight(1);
   stroke(0);
   noFill();
@@ -95,9 +95,11 @@ function draw() {
   const penLineWidth = mmToInch(20)
   strokeWeight(inchToPx(penLineWidth))
  
-  background(200);
+  // background(200);
   line(30,30,300,300)
 
+  save("mySVG.svg"); // give file name
+  // noLoop(); // we just want to export once
   noLoop(); 
 }
 
