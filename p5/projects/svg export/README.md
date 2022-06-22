@@ -6,7 +6,7 @@ To convert a p5 drawing to an SVG exportable drawing:
 
 -   Add either of the following lines to your index.html head
     <script src="https://unpkg.com/p5.js-svg@1.3.1"></script>    <- For latest opensource version
-    <script src="../p5/svgExport/p5.js-svg@1.3.1.js"></script>   <- Cached copy of above
+    <script src="../../p5/svgExport/p5.js-svg@1.3.1.js"></script>   <- Cached copy of above
 -   Add SVG as third argument of createCanvas
     createCanvas(500, 500, SVG);
 -   Ensure
