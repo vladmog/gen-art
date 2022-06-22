@@ -1,4 +1,4 @@
-https://htmlpreview.github.io/?https://github.com/vladmog/gen-art/blob/master/p5/starter/index.html
+https://htmlpreview.github.io/?https://github.com/vladmog/gen-art/blob/master/p5/projects/starter/index.html
 
 This is a template optimized for the generation of pen plot SVGs
 
