@@ -1,11 +1,11 @@
-const mmToInch = (mm) => {
+const mm_to_inch = (mm) => {
     const inches = mm/25.4;
     return inches
 }
 
 const utensils = {
     "Pilot G2 0.7": {
-        defaultWidth: mmToInch(0.7),    // reasonable data
+        defaultWidth: mm_to_inch(0.7),    // reasonable data
         papers: {
             "Rhodia Web Note Book": {
                 Speeds: {
