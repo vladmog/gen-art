@@ -4,6 +4,14 @@ Line width is a function of
 2. the paper being drawn on
 3. travel speed of the line
 
+## To use
+
+Add reference to lineWidth.js in index.js of project
+
+```
+<script src='../../utils/lineWidth/lineWidth.js'></script>
+```
+
 lineWidth is both a tool that returns a line width based on these three values, as well as a record of line widths across various utensil/paper/speed combinations.
 
 ## Planning
@@ -29,7 +37,7 @@ lineWidth - Num - width of line in inches
             papers: {
                 paper: {
                     Speeds: {
-                        Speed: Num
+                        Speed: lineWidth
                     }
                 }
             }

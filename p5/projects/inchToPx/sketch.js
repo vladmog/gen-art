@@ -37,18 +37,26 @@ Sharpie
 
 */
 
-const inchDimensions = {
-    x: 3,
-    y: 3
-}
 
-const pxDimensions = {
-    x: 391,
-    y: 391
-}
+console.log(lineWidth("Pilot G2 0.7"))
 
+
+
+let inchDimensions
+let pxDimensions
 
 function setup() {
+
+  inchDimensions = {
+      x: 3,
+      y: 3
+  }
+
+  pxDimensions = {
+      x: 391,
+      y: 391
+  }
+
   createCanvas(pxDimensions.x, pxDimensions.y, SVG);
   strokeWeight(1);
   stroke(0);
@@ -98,7 +106,7 @@ function draw() {
   // background(200);
   line(30,30,300,300)
 
-  save("mySVG.svg"); // give file name
+  // save("mySVG.svg"); // give file name
   // noLoop(); // we just want to export once
   noLoop(); 
 }
