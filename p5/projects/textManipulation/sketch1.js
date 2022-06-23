@@ -32,33 +32,49 @@ function draw() {
 	textFont(font);
 	textSize(200);
 
-	points = font.textToPoints("hello", width / 2, height / 2, 200, {
-		sampleFactor: 5,
-		simplifyThreshold: 0,
-	});
-	bounds = font.textBounds("hello", width / 2, height / 2, 200);
-	console.log(bounds);
+	const writeText = (msg, x, y, fSize) => {
+		let points = font.textToPoints(msg, x, y, fSize, {
+			sampleFactor: 5,
+			simplifyThreshold: 0,
+		});
+		let bounds = font.textBounds(msg, x, y, fSize);
 
-	strokeWeight(10);
-	point(bounds.x, bounds.y);
-	strokeWeight(defStrokeWeight);
-	quad(
-		bounds.x,
-		bounds.y,
-		bounds.x + bounds.w,
-		bounds.y,
-		bounds.x + bounds.w,
-		bounds.y + bounds.h,
-		bounds.x,
-		bounds.y + bounds.h
-	);
+		point(bounds.x, bounds.y);
+		strokeWeight(defStrokeWeight);
+		quad(
+			bounds.x,
+			bounds.y,
+			bounds.x + bounds.w,
+			bounds.y,
+			bounds.x + bounds.w,
+			bounds.y + bounds.h,
+			bounds.x,
+			bounds.y + bounds.h
+		);
 
-	beginShape();
-	for (let i = 0; i < points.length; i++) {
-		const x = points[i].x;
-		const y = points[i].y;
-		vertex(x, y);
-	}
-	endShape();
+		beginShape();
+		let prev = { x: 0, y: 0 };
+		for (let i = 0; i < points.length; i++) {
+			const x = points[i].x;
+			const y = points[i].y;
+
+			// Handle line breaks
+			const distPrev = distOf(x, y, prev.x, prev.y);
+			const distThreshold = 5;
+			if (i && distPrev > distThreshold) {
+				console.log(distPrev);
+				endShape();
+				beginShape();
+			}
+
+			// Draw vertex
+			vertex(x, y);
+			prev = { x, y };
+		}
+		endShape();
+	};
+
+	writeText("hello", width / 2, height / 2, 200);
+
 	noLoop();
 }

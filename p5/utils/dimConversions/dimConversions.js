@@ -88,3 +88,10 @@ dim.inchToMM = inches => {
 	const mm = inches * 25.4;
 	return mm;
 };
+
+// ::::::: D I M E N S I O N A L   F U N C T I O N S   :::::::::::::
+
+dim.distOf = (x1, y1, x2, y2) => {
+	const dist = Math.sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+	return dist;
+};
