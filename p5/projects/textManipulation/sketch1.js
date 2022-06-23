@@ -31,8 +31,34 @@ function draw() {
 
 	textFont(font);
 	textSize(200);
-	text("hello", width / 2, height / 2);
 
+	points = font.textToPoints("hello", width / 2, height / 2, 200, {
+		sampleFactor: 5,
+		simplifyThreshold: 0,
+	});
+	bounds = font.textBounds("hello", width / 2, height / 2, 200);
+	console.log(bounds);
+
+	strokeWeight(10);
+	point(bounds.x, bounds.y);
+	strokeWeight(defStrokeWeight);
+	quad(
+		bounds.x,
+		bounds.y,
+		bounds.x + bounds.w,
+		bounds.y,
+		bounds.x + bounds.w,
+		bounds.y + bounds.h,
+		bounds.x,
+		bounds.y + bounds.h
+	);
+
+	beginShape();
+	for (let i = 0; i < points.length; i++) {
+		const x = points[i].x;
+		const y = points[i].y;
+		vertex(x, y);
+	}
+	endShape();
 	noLoop();
-	// save("mySVG.svg")
 }

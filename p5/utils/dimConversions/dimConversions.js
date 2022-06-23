@@ -22,7 +22,7 @@ dim.pxDimensions = {
 	y: 130.3,
 };
 
-dim.updateDims = (w, h, scale = 1) => {
+dim.updateDims = (w, h, scaleFactor = 1) => {
 	/* 
 
 	Updates inchDimensions and pxDimensions to represent 
@@ -34,9 +34,9 @@ dim.updateDims = (w, h, scale = 1) => {
 	h : Num 
 	height of plot in inches
 
-	scale : Num 
+	scaleFactor : Num 
 	Scales canvas.
-	By default scale is 1, for a 1:1 scale canvas:plot
+	By default scaleFactor is 1, for a 1:1 scale canvas:plot
 
 	*/
 
@@ -51,8 +51,8 @@ dim.updateDims = (w, h, scale = 1) => {
 	};
 
 	dim.pxDimensions = {
-		x: (dim.pxDimensions.x *= scale),
-		y: (dim.pxDimensions.y *= scale),
+		x: (dim.pxDimensions.x *= scaleFactor),
+		y: (dim.pxDimensions.y *= scaleFactor),
 	};
 };
 
