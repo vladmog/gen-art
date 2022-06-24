@@ -39,19 +39,6 @@ function draw() {
 		});
 		let bounds = font.textBounds(msg, x, y, fSize);
 
-		point(bounds.x, bounds.y);
-		strokeWeight(defStrokeWeight);
-		quad(
-			bounds.x,
-			bounds.y,
-			bounds.x + bounds.w,
-			bounds.y,
-			bounds.x + bounds.w,
-			bounds.y + bounds.h,
-			bounds.x,
-			bounds.y + bounds.h
-		);
-
 		beginShape();
 		let prev = { x: 0, y: 0 };
 		for (let i = 0; i < points.length; i++) {
@@ -74,7 +61,7 @@ function draw() {
 		endShape();
 	};
 
-	writeText("x--", width / 2, height / 2, 100);
+	writeText("test", width / 2, height / 2, 100);
 
 	noLoop();
 }
