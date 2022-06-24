@@ -59,7 +59,7 @@ function draw() {
 			const y = points[i].y;
 
 			// Handle line breaks
-			const distPrev = distOf(x, y, prev.x, prev.y);
+			const distPrev = dim.distOf(x, y, prev.x, prev.y);
 			const distThreshold = 5;
 			if (i && distPrev > distThreshold) {
 				console.log(distPrev);
@@ -74,7 +74,7 @@ function draw() {
 		endShape();
 	};
 
-	writeText("hello", width / 2, height / 2, 200);
+	writeText("x--", width / 2, height / 2, 100);
 
 	noLoop();
 }
