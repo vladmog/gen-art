@@ -18,12 +18,11 @@ function setup() {
 	stroke(0);
 	noFill();
 	angleMode(DEGREES);
-	frameRate(30);
+	frameRate(5);
 }
 
 function draw() {
 	line(0, 0, width, height);
-
 	noLoop();
-	// save("mySVG.svg")
+	// save("mySVG.svg");
 }

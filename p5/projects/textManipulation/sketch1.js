@@ -39,19 +39,6 @@ function draw() {
 		});
 		let bounds = font.textBounds(msg, x, y, fSize);
 
-		point(bounds.x, bounds.y);
-		strokeWeight(defStrokeWeight);
-		quad(
-			bounds.x,
-			bounds.y,
-			bounds.x + bounds.w,
-			bounds.y,
-			bounds.x + bounds.w,
-			bounds.y + bounds.h,
-			bounds.x,
-			bounds.y + bounds.h
-		);
-
 		beginShape();
 		let prev = { x: 0, y: 0 };
 		for (let i = 0; i < points.length; i++) {
@@ -59,7 +46,7 @@ function draw() {
 			const y = points[i].y;
 
 			// Handle line breaks
-			const distPrev = distOf(x, y, prev.x, prev.y);
+			const distPrev = dim.distOf(x, y, prev.x, prev.y);
 			const distThreshold = 5;
 			if (i && distPrev > distThreshold) {
 				console.log(distPrev);
