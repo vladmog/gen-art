@@ -18,7 +18,7 @@ function setup() {
 	stroke(0);
 	noFill();
 	angleMode(DEGREES);
-	frameRate(5);
+	frameRate(6);
 }
 
 function draw() {
