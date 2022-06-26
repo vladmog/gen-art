@@ -61,7 +61,7 @@ function draw() {
 		endShape();
 	};
 
-	writeText("hello", width / 2, height / 2, 200);
+	writeText("test", width / 2, height / 2, 100);
 
 	noLoop();
 }
