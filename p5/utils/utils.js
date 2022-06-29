@@ -95,3 +95,33 @@ dim.distOf = (x1, y1, x2, y2) => {
 	const dist = Math.sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
 	return dist;
 };
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// W R I T I N G   U T E N S I L   F U N C T I O N S
+
+const utensils = {
+	"Pilot G2 0.7": {
+		defaultWidth: dim.mmToInch(0.7), // reasonable data
+		papers: {
+			"Rhodia Web Note Book": {
+				Speeds: {
+					60: 0.7, // dummy data
+					61: 0.5, // dummy data
+				},
+			},
+		},
+	},
+};
+
+const lineWidth = (utensil, paper, drawSpeed) => {
+	return utensils[utensil].defaultWidth;
+};
