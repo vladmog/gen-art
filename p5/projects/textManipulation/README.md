@@ -23,3 +23,7 @@ Will use this if Hershey text testing proves unsuccessful.
 Having now learned that util js files still have access to p5 functions so long as the util file is invoked after p5 but before sketch in index.js, the next goal is to abstract pointsToText to a function. Also (unrelated), would like to combine all util files into a single file with different objects. 
 
 and then will use the text bounds functionality to use as a test outline for use in Hershey text conversions in InkScape
+
+
+
+I don't think text size is scaling to canvas

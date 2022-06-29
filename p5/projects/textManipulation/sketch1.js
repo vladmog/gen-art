@@ -1,8 +1,8 @@
 // =========== S E T U P ================
 
 // Enter desired plot size in inches
-const plotW = 4;
-const plotH = 4;
+const plotW = 8;
+const plotH = 8;
 const scale = 1;
 dim.updateDims(plotW, plotH, scale);
 
@@ -29,39 +29,27 @@ function setup() {
 function draw() {
 	line(0, 0, width, height);
 
-	textFont(font);
-	textSize(200);
-
-	const writeText = (msg, x, y, fSize) => {
-		let points = font.textToPoints(msg, x, y, fSize, {
-			sampleFactor: 5,
-			simplifyThreshold: 0,
-		});
-		let bounds = font.textBounds(msg, x, y, fSize);
-
-		beginShape();
-		let prev = { x: 0, y: 0 };
-		for (let i = 0; i < points.length; i++) {
-			const x = points[i].x;
-			const y = points[i].y;
-
-			// Handle line breaks
-			const distPrev = dim.distOf(x, y, prev.x, prev.y);
-			const distThreshold = 5;
-			if (i && distPrev > distThreshold) {
-				console.log(distPrev);
-				endShape();
-				beginShape();
+	let word = new TextPoints("test", width / 2, height / 2, font, 300);
+	let letters = word.letterPoints;
+	console.log(letters);
+	for (let i = 0; i < letters.length; i++) {
+		let letter = letters[i];
+		for (let shape = 0; shape < letter.shapeCount; shape++) {
+			beginShape();
+			for (
+				let point = 0;
+				point < letter.shapes[shape].points.length;
+				point++
+			) {
+				let coords = letter.shapes[shape].points[point];
+				let { x, y } = coords;
+				let yOffset = sin(x * 20) * 2;
+				y += yOffset;
+				vertex(x, y);
 			}
-
-			// Draw vertex
-			vertex(x, y);
-			prev = { x, y };
+			endShape();
 		}
-		endShape();
-	};
-
-	writeText("test", width / 2, height / 2, 100);
+	}
 
 	noLoop();
 }
