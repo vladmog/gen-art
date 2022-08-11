@@ -230,7 +230,7 @@ class TextPoints {
 
 			// Handle line breaks
 			const distPrev = dim.distOf(x, y, prev.x, prev.y);
-			const distThreshold = 5;
+			const distThreshold = 1;
 
 			// If line break detected
 			if (i && distPrev > distThreshold) {
