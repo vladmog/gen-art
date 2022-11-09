@@ -327,7 +327,7 @@ function draw() {
 
 	noLoop();
 	let eightSplit = height / 8;
-	let margin = 0;
+	let margin = 5;
 	for (let i = 0; i < 8; i++) {
 		let x1 = 0 + margin;
 		let y1 = i * eightSplit;
@@ -340,36 +340,16 @@ function draw() {
 		// quad(x1, y1, x2, y2, x3, y3, x4, y4);
 		let sixthWidth = (x2 - x1) / 6;
 		let sixthMargin = dim.inchToPx(0.05);
-
+		// continue;
 		if (i) {
-			// draw note line
-			line(
-				x1 + sixthMargin,
-				y4 - sixthMargin,
-				x1 + sixthWidth - sixthMargin,
-				y4 - sixthMargin
-			);
-			// draw keyboard
 			let keyboardX = x1 + sixthWidth * 3 + sixthMargin;
 			let keyboardY = y1 + sixthMargin;
 			let keyboardW = sixthWidth * 3 - sixthMargin * 2;
 			let keyboardH = y4 - y1 - sixthMargin * 2;
 			let keyboardO = 2;
 			drawKeyboard(keyboardX, keyboardY, keyboardW, keyboardH, keyboardO);
-			// draw chord line
-			// line(
-			// 	x1 + sixthWidth * 4 + sixthMargin,
-			// 	(y4 + y1) / 2,
-			// 	x1 + sixthWidth * 5,
-			// 	(y4 + y1) / 2
-			// );
-			// draw chord notes line
-			line(
-				x1 + sixthWidth + sixthMargin,
-				y4 - sixthMargin,
-				x1 + sixthWidth * 3 - sixthMargin,
-				y4 - sixthMargin
-			);
+			keyboardX = x1;
+			drawKeyboard(keyboardX, keyboardY, keyboardW, keyboardH, keyboardO);
 		} else {
 			let str = "C maj";
 			x = x1 + sixthMargin;
