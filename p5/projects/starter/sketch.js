@@ -30,7 +30,7 @@ function draw() {
 	line(0, 0, width, height);
 	textSize(100);
 	textFont(font);
-	text("FUCK", width / 2, height / 2);
+	text("DUCK", width / 2, height / 2);
 	noLoop();
 	save("mySVG.svg");
 }
