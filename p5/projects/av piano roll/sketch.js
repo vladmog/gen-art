@@ -134,7 +134,7 @@ function draw() {
 					// doing later so as not to interfere with iteration of for loop
 					if (notes[activeNote].instances.length === 0) {
 						notesIndexesToBeDeactivated.push(activeNoteIndex);
-						console.log(notesIndexesToBeDeactivated);
+						// console.log(notesIndexesToBeDeactivated);
 					}
 				}
 			}
@@ -165,6 +165,8 @@ function draw() {
 			if (!activeNotes.includes(e.note.number)) {
 				activeNotes.push(e.note.number);
 			}
+			console.log(e.note.identifier);
+
 			notes[e.note.number].isNoteOn = true;
 			notes[e.note.number].instances.push({
 				// noteOnTime: e.timestamp,
