@@ -130,7 +130,37 @@ dim.distOf = (x1, y1, x2, y2) => {
 	return dist;
 };
 
-dim.intersectsOf = () => {};
+// intersectOf is not my function
+dim.intersectOf = (x1, y1, x2, y2, x3, y3, x4, y4) => {
+	// Check if none of the lines are of length 0
+	if ((x1 === x2 && y1 === y2) || (x3 === x4 && y3 === y4)) {
+		console.log("Line length 0");
+		return false;
+	}
+
+	denominator = (y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1);
+
+	// Lines are parallel
+	if (denominator === 0) {
+		console.log("Denominator is 0");
+		return false;
+	}
+
+	let ua = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / denominator;
+	let ub = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / denominator;
+
+	// is the intersection along the segments
+	if (ua < 0 || ua > 1 || ub < 0 || ub > 1) {
+		console.log("cancelled error lol");
+		// return false;
+	}
+
+	// Return a object with the x and y coordinates of the intersection
+	let x = x1 + ua * (x2 - x1);
+	let y = y1 + ua * (y2 - y1);
+
+	return { x, y };
+};
 //
 //
 //
@@ -465,6 +495,70 @@ const intToRoman = num => {
 };
 
 //  M U S I C A L   U T I L I T I E S
+
+let inited = false;
+const notes = {};
+const activeNotes = [];
+const midiCC = {};
+let isGlitchDetected = false;
+
+const cleanNotes = () => {
+	/* 
+		Goes through active notes and erases instances
+		whose note-off timestamps are more than a ribbon-
+		length in time old.
+	*/
+
+	const notesIndexesToBeDeactivated = [];
+
+	// Cull instances
+	// Iterate through array of activeNotes (notes that are being displayed)
+	for (
+		let activeNoteIndex = 0;
+		activeNoteIndex < activeNotes.length;
+		activeNoteIndex++
+	) {
+		const activeNote = activeNotes[activeNoteIndex];
+		let activeNoteInstances = notes[activeNote].instances;
+		// Iterate through instances of active note
+		for (
+			let instanceIndex = 0;
+			instanceIndex < activeNoteInstances.length;
+			instanceIndex++
+		) {
+			const instance = activeNoteInstances[instanceIndex];
+
+			// If noteOffTime is blank, it's still being held and shouldn't be culled
+			if (instance.noteOffTime === "") {
+				// console.log("No note off");
+				continue;
+			}
+
+			// If elapsed time since note off is greater than ribbon length,
+			// note instance has ran off the ribbon. Cull the note instance
+			const elapsedTime = currTime - instance.noteOffTime;
+			const ribbonLength = msPerBeat * 4;
+			if (elapsedTime > ribbonLength) {
+				// Erase instance
+				notes[activeNote].instances.splice(instanceIndex, 1);
+
+				// If not more instances, log index of note in activeNotes arr to be deleted later
+				// doing later so as not to interfere with iteration of for loop
+				if (notes[activeNote].instances.length === 0) {
+					notesIndexesToBeDeactivated.push(activeNoteIndex);
+					// console.log(notesIndexesToBeDeactivated);
+				}
+			}
+		}
+	}
+
+	// Erase inactive notes in active notes array
+	for (let i = notesIndexesToBeDeactivated.length - 1; i >= 0; i--) {
+		const activeNoteIndexToDeactivate = notesIndexesToBeDeactivated[i];
+
+		activeNotes.splice(activeNoteIndexToDeactivate, 1);
+	}
+};
 // TODO: Create inharmonic equivalency checker
 
 // MIDI numbers mapped to their corresponding notes (confirmed only with Elektron Syntakt)
@@ -828,8 +922,8 @@ const midiToNote = midi => {
 const noteToMidi = note => {
 	return noteToMidiRef[note];
 };
-// intervalsfrom https://github.com/danigb/music-scale/blob/master/dict/scales.json
 let intervals = {
+	// intervalsfrom https://github.com/danigb/music-scale/blob/master/dict/scales.json
 	lydian: "1 2 3 4# 5 6 7",
 	major: "1 2 3 4 5 6 7",
 	mixolydian: "1 2 3 4 5 6 7b",
@@ -999,8 +1093,97 @@ const deriveScale = (root, intervals) => {
 	return newScale;
 };
 
-deriveScale("A6", intervals["ritusen"]).forEach(midi => {
-	console.log(midiToNote(midi));
-});
+// deriveScale("A6", intervals["ritusen"]).forEach(midi => {
+// 	console.log(midiToNote(midi));
+// });
+
+const playNote = (
+	outputDevice,
+	midiChannel,
+	note,
+	octave,
+	duration,
+	delay,
+	identifier
+) => {
+	midiChannel = outputDevice.channels[midiChannel];
+	delay = "+" + delay.toString();
+
+	const noteIdentifier = identifier ? identifier : note + octave.toString();
+	midiChannel.playNote(noteIdentifier, {
+		duration: duration,
+		time: delay,
+	});
+};
+
+const playScale = (
+	outputDevice,
+	midiChannel,
+	root,
+	scale,
+	octave,
+	noteDur,
+	spacing,
+	delay
+) => {
+	midiChannel = outputDevice.channels[midiChannel];
+	delay = "+" + delay.toString();
+	const rootIdentifier = root + octave.toString();
+	console.log(rootIdentifier);
+	scale = deriveScale(rootIdentifier, intervals[scale]);
+	const delayNote = (i, timeout) => {
+		setTimeout(() => {
+			midiChannel.playNote(scale[i], {
+				duration: noteDur,
+				time: "+0",
+			});
+		}, timeout);
+	};
+	for (let i = 0; i < scale.length; i++) {
+		console.log(scale[i], i * spacing);
+		delayNote(i, i * spacing); // only way I found to iterate through notes and apply delays to each
+	}
+};
+
+const playDiatonicTriad = (
+	outputDevice,
+	midiChannel,
+	noteDur,
+	strum,
+	root,
+	scale,
+	chordNum,
+	octave,
+	delay
+) => {
+	midiChannel = outputDevice.channels[midiChannel];
+	delay = "+" + delay.toString();
+	const rootIdentifier = root + octave.toString();
+	scale = deriveScale(rootIdentifier, intervals[scale]);
+	const chordRoot = scale[chordNum - 1]; // MIDI note of chord root
+	const chordNotes = [];
+
+	// Derive notes of chord
+	for (let i = 0; i < 3; i++) {
+		let isOctaveHigher = false;
+
+		// Derive index in scale array of chord root
+		let chordRootIndex = chordNum - 1 + i * 2;
+
+		// Handle if root is in a higher octave
+		if (chordRootIndex > scale.length) {
+			chordRootIndex = chordRootIndex % scale.length;
+			isOctaveHigher = true;
+		}
+		let midiNote = scale[chordRootIndex];
+		if (isOctaveHigher) midiNote += 12;
+		chordNotes.push(midiNote);
+	}
+
+	midiChannel.playNote(chordNotes, {
+		duration: noteDur,
+		time: delay,
+	});
+};
 
 // TODO

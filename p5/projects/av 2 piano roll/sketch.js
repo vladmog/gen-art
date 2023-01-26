@@ -19,11 +19,6 @@ const defStrokeWeight = dim.inchToPx(lineWidth(defPen));
 
 // ======== E N D   S E T U P ============
 
-let inited = false;
-let notes = {};
-let activeNotes = [];
-let isGlitchDetected = false;
-
 function setup() {
 	createCanvas(dim.pxDimensions.x, dim.pxDimensions.y, SVG);
 	strokeWeight(defStrokeWeight);
@@ -90,63 +85,7 @@ function draw() {
 	const mySynth = myInput.channels[1]; // <-- the MIDI channel (1)
 
 	// Remove stale notes
-	const cleanNotes = () => {
-		/* 
-			Goes through active notes and erases instances
-			whose note-off timestamps are more than a ribbon-
-			length in time old.
-		*/
 
-		const notesIndexesToBeDeactivated = [];
-
-		// Cull instances
-		// Iterate through array of activeNotes (notes that are being displayed)
-		for (
-			let activeNoteIndex = 0;
-			activeNoteIndex < activeNotes.length;
-			activeNoteIndex++
-		) {
-			const activeNote = activeNotes[activeNoteIndex];
-			let activeNoteInstances = notes[activeNote].instances;
-			// Iterate through instances of active note
-			for (
-				let instanceIndex = 0;
-				instanceIndex < activeNoteInstances.length;
-				instanceIndex++
-			) {
-				const instance = activeNoteInstances[instanceIndex];
-
-				// If noteOffTime is blank, it's still being held and shouldn't be culled
-				if (instance.noteOffTime === "") {
-					// console.log("No note off");
-					continue;
-				}
-
-				// If elapsed time since note off is greater than ribbon length,
-				// note instance has ran off the ribbon. Cull the note instance
-				const elapsedTime = currTime - instance.noteOffTime;
-				const ribbonLength = msPerBeat * 4;
-				if (elapsedTime > ribbonLength) {
-					// Erase instance
-					notes[activeNote].instances.splice(instanceIndex, 1);
-
-					// If not more instances, log index of note in activeNotes arr to be deleted later
-					// doing later so as not to interfere with iteration of for loop
-					if (notes[activeNote].instances.length === 0) {
-						notesIndexesToBeDeactivated.push(activeNoteIndex);
-						// console.log(notesIndexesToBeDeactivated);
-					}
-				}
-			}
-		}
-
-		// Erase inactive notes in active notes array
-		for (let i = notesIndexesToBeDeactivated.length - 1; i >= 0; i--) {
-			const activeNoteIndexToDeactivate = notesIndexesToBeDeactivated[i];
-
-			activeNotes.splice(activeNoteIndexToDeactivate, 1);
-		}
-	};
 	cleanNotes();
 
 	/*

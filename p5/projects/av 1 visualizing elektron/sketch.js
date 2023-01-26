@@ -12,7 +12,7 @@ const defStrokeWeight = dim.inchToPx(lineWidth(defPen));
 
 // ======== E N D   S E T U P ============
 
-let inited = false;
+// let inited = false;
 let notesRef = {
 	0: "C-1",
 	1: "C#-1",
@@ -135,7 +135,7 @@ let notesRef = {
 	118: "A#8",
 	119: "B8",
 };
-let notes = {};
+// let notes = {};
 
 function setup() {
 	createCanvas(dim.pxDimensions.x, dim.pxDimensions.y, SVG);

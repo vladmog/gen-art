@@ -25,6 +25,7 @@ let mySynth;
 let inited = false;
 const notes = {};
 const activeNotes = [];
+const midiCC = {};
 let isGlitchDetected = false;
 
 function setup() {
@@ -120,14 +121,27 @@ function setup() {
 			lastNoteOff = currNoteOff;
 		});
 
+		mySynth.addListener("controlchange", e => {
+			midiCC[e.message.data[1]].value = e.rawValue;
+		});
+
 		inited = true;
 	}
 
+	// Populate notes data structure
 	for (let i = 0; i <= 119; i++) {
 		notes[i] = {
 			identifier: midiToNoteRef[i],
 			isNoteOn: false,
 			instances: [], // Arr of instances of note, each with note on and note off timestamp
+		};
+	}
+
+	// Populate MIDI CC data structure
+	for (let i = 1; i <= 119; i++) {
+		midiCC[i] = {
+			midiCC: i,
+			value: 0,
 		};
 	}
 }
@@ -294,7 +308,7 @@ function draw() {
 	// REMOVE OFF-TIMEFRAME NOTES
 	cleanNotes();
 
-	// DRAW NOTES
+	// DRAW NOTES AND SEND TO SYNTAKT
 	const center = {
 		x: width / 2,
 		y: height / 2,
@@ -336,8 +350,11 @@ function draw() {
 		},
 	];
 	const oscSpeed = 4;
-
 	drawPolyrythm(center, minRadius, maxRadius, ringNotes, oscSpeed);
+
+	// RECEIVE MIDI CC FROM SYNTAKT AND DRAW
+	const ccCircleDiameter = map(midiCC[33].value, 0, 127, 1, width);
+	ellipse(center.x, center.y, ccCircleDiameter);
 
 	// Iterate time
 	currFrame += 1;
