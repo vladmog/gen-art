@@ -11,6 +11,7 @@ const dim = {};
 // Default represents mapping of 1 inch to 130.3 px
 
 // Dimensions of plot in inches
+//test
 dim.inchDimensions = {
 	x: 1,
 	y: 1,
@@ -1018,10 +1019,10 @@ const deriveScale = (root, intervals) => {
 	/*
 
 	root : Num || Str
-	     : MIDI note # (ex: 22), or Note identifier (ex: "A#0")
+		 : MIDI note # (ex: 22), or Note identifier (ex: "A#0")
 	
 	interval: str
-	        : str denoting interval from root to create scale from
+			: str denoting interval from root to create scale from
 			: modification of root major scale used to derive given scale
 
 	Steps:
